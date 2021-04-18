@@ -1,20 +1,21 @@
 const btnTask = document.querySelectorAll('.btn__task');
+const textTask = document.querySelectorAll('.body__text');
 
 
 
 
 
-
-const completedTask = (b) => {
-    if(b.classList.contains('task__btn--compleate')){
-        b.classList.remove('task__btn--compleate')
+const completedTask = (i) => {
+    if(btnTask[i].classList.contains('task__btn--compleate')){
+        btnTask[i].classList.remove('task__btn--compleate')
     } else {
-        b.classList.add('task__btn--compleate')
+        btnTask[i].classList.add('task__btn--compleate')
     }
+    // if(btnTask[i] != 1)
 }
 
 
 
-btnTask.forEach(b => {
-    b.addEventListener('click', () => completedTask(b))
-})
+for(let i = 0; i < btnTask.length; i++){
+    btnTask[i].addEventListener('click', () => completedTask(i))
+}
