@@ -110,6 +110,7 @@ body{
     line-height: 1;
     letter-spacing: -0.25px;
     color: #9495A5;
+    caret-color: #3A7CFD;
 }
 
 .header__input:hover, .header__input:focus{
@@ -125,7 +126,7 @@ body{
 }
 
 
-.header__btn{
+.btn__task{
     width: 25px;
     height: 25px;
     background: transparent;
@@ -136,15 +137,28 @@ body{
     margin-right: 25px;
     margin-left: 25px;
     cursor: pointer;
-    transition: all 0.5s ease;
+    transition: background 0.7s ease;
 }
 
-.header__btn:hover{
-    -moz-border-image: -moz-linear-gradient(top left, #55DDFF 0%, #C058F3 100%);
-    -webkit-border-image: -webkit-linear-gradient(top left, #55DDFF 0%, #C058F3 100%);
-    border-image: linear-gradient(to bottom right, #55DDFF 0%, #C058F3 100%);
-    border-image-slice: 1; 
+.btn__task:hover{
+    border: 1px solid transparent;
+    background: linear-gradient(#FFFFFF,#FFFFFF) padding-box, linear-gradient(to bottom right, #55DDFF 0%, #C058F3 100%) border-box;
 }
-    /* border-image-source: linear-gradient(135deg, #55DDFF 0%, #C058F3 100%); */
 
+.task__btn--compleate{
+    border-radius: 0%;
+    background: none;
+    background-image: url("../img/check.svg") !important;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border: none !important;
+}
+
+.task__btn--compleate:hover{
+    border: none;
+    background: none;
+    background-image: url("../img/check.svg") !important;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
 
