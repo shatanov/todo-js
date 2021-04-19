@@ -2,11 +2,22 @@ const inputBtn = document.querySelector('.input__btn');
 const textTask = document.querySelectorAll('.body__text');
 const input = document.querySelector('.header__input');
 const tasksWrapper = document.querySelector('.tasks__wrapper');
+const taskWrapperFirst = document.querySelector('.task__wrapper');
 const tasksInfo = document.querySelector('.tasks__info');
+const tasksCount = document.querySelector('.count');
 
-let tasksAll = []
-
-
+let tasksAll = [
+    // {
+    //     compleated: true,
+    //     text: 'gdg'
+    // },
+    // {
+    //     compleated: false,
+    //     text: '33'
+    // }
+]
+let newTaskCount = 0
+tasksCount.textContent = tasksAll.length + " "
 
 const addCompletedTask = (btn, bodyText) => {
     if(btn.classList.contains('task__btn--compleate') && bodyText.classList.contains('body__text--compleate')) {
@@ -17,6 +28,26 @@ const addCompletedTask = (btn, bodyText) => {
         btn.classList.add('task__btn--compleate')
         bodyText.classList.add('body__text--compleate')
     }
+    tasksAll.forEach(t => {
+        if(t.text == bodyText.textContent){
+            t.compleated = !t.compleated
+        }
+    })
+}
+
+const delTask = (taskWrapper, bodyText) => {    
+    taskWrapper.remove()
+    tasksAll.forEach(t => {
+        if(t.text == bodyText.textContent){
+            const idx = tasksAll.indexOf(t)
+            tasksAll.splice(idx, 1);
+        }
+    })
+    updateTasksCount()
+}
+
+const updateTasksCount = () => {
+    tasksCount.textContent = tasksAll.length + " "
 }
 
 const clearInput = () => {
@@ -31,7 +62,8 @@ const addTask = () => {
         compleated: checkCompleated(),
         text: input.value
     }
-    tasksAll.push(task)
+    tasksAll.push(task);
+    updateTasksCount();
     clearInput();
     addElemDOM()
 }
@@ -44,15 +76,31 @@ const checkCompleated = () =>{
     }
 }
 
-const addElemDOM =  () => {
+const addElemDOM = () => {
+    if(tasksAll.length > 1){
+        newTaskCount += 1
+        addNewTask()
+    } else {
+        addNewTask()
+    }
+}
+
+const addNewTask = () => {
+    for(let i = newTaskCount; i < tasksAll.length; i++){
+        createElement(i)
+    }
+}
+
+const createElement = (i) => {
+    taskWrapperFirst.remove();
     const taskWrapper = document.createElement('div');
     taskWrapper.classList.add('task__wrapper')
     const btnWrapper = document.createElement('div');
     btnWrapper.classList.add('btn__wrapper');
     const btn = document.createElement('button');
     btn.classList.add('btn__task');
-
-
+    
+    
     const taskBody = document.createElement('div');
     taskBody.classList.add('task__body');
     const bodyText = document.createElement('div');
@@ -61,8 +109,8 @@ const addElemDOM =  () => {
     delWrapper.classList.add('body__del');
     delBtn = document.createElement('button');
     delBtn.classList.add('del__btn');
-
-
+    
+    
     btnWrapper.appendChild(btn);
     taskWrapper.appendChild(btnWrapper);
     delWrapper.appendChild(delBtn);
@@ -70,15 +118,14 @@ const addElemDOM =  () => {
     taskBody.appendChild(delWrapper);
     taskWrapper.appendChild(taskBody);
 
-    for(let i=0; i < tasksAll.length; i++) {
-        if(tasksAll[i].compleated == true) {
-            btn.classList.add('task__btn--compleate')
-            bodyText.classList.add('body__text--compleate')
-        }
-        bodyText.textContent = tasksAll[i].text;
-        tasksWrapper.insertBefore(taskWrapper, tasksInfo);
-        btn.addEventListener('click', () => addCompletedTask(btn, bodyText))
+    if(tasksAll[i].compleated == true) {
+        btn.classList.add('task__btn--compleate')
+        bodyText.classList.add('body__text--compleate')
     }
+    bodyText.textContent = tasksAll[i].text;
+    tasksWrapper.insertBefore(taskWrapper, tasksInfo);
+    btn.addEventListener('click', () => addCompletedTask(btn, bodyText))
+    delBtn.addEventListener('click', () => delTask(taskWrapper, bodyText))
 }
 
 
@@ -95,4 +142,5 @@ inputBtn.addEventListener('click', () => {
         inputBtn.classList.add('task__btn--compleate')
     }
 })
+
 
